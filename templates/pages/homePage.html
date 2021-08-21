@@ -1,0 +1,45 @@
+{% extends 'layouts/main.html' %}
+{% block title %}Home{% endblock %}
+{% block content %}
+
+
+<div class="page-header">
+  <h1>Weather at Major World Cities</h1>
+</div>
+<p class="lead">Temperature in Celcius</p>
+<html>
+  <head>
+   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+   <script type="text/javascript"> 
+      
+      google.charts.load('current', {'packages':['gauge']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+
+        var data = google.visualization.arrayToDataTable([
+        ['Label', 'Value'],
+        ['New York', {{newyork['current']['temp_c']}}],
+        ['Toronto', {{toronto['current']['temp_c']}}],
+        ['Sydney', {{sydney['current']['temp_c']}}],
+        ['London', {{london['current']['temp_c']}}],
+        ['Delhi', {{delhi['current']['temp_c']}}],
+        ]);
+
+        var options = {
+          width: 1200, height: 450
+        };
+
+        var chart = new google.visualization.Gauge(document.getElementById('chart_div'));
+
+        chart.draw(data, options);
+      }
+    </script>
+  </head>
+  <body>
+    <div id="chart_div" style="width: 300px; height: 200spx;"></div>
+  </body>
+</html>
+
+{% endblock %}
